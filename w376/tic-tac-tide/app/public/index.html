@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Tic Tac Tide</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <link
+      href="//fonts.googleapis.com/css?family=Raleway:400,300,600"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link rel="stylesheet" href="/public/css/normalize.css" />
+    <link rel="stylesheet" href="/public/css/skeleton.css" />
+    <link rel="stylesheet" href="/public/css/custom.css" />
+    <style>
+      html,
+      body {
+        height: 100%;
+      }
+      div.container.wrapper {
+        display: table;
+        height: 100%;
+        width: 100%;
+      }
+      #footer {
+        /* Placeholder footer styles */
+        text-align: center;
+      }
+      div.container {
+        max-width: inherit;
+      }
+      section {
+        padding-top: 20px;
+        text-align: center;
+      }
+      span.tide {
+        color: #444;
+        padding: 5px;
+        font-size: 4.7rem;
+        border: 1px solid #dea584;
+        border-radius: 5px;
+        background-color: #dea584;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.05);
+      }
+      span.inspired {
+        font-size: 1.5rem;
+      }
+      pre.explain {
+        white-space: pre-wrap;
+        font-size: 1.7rem;
+        padding: 15px 0;
+      }
+      code.explain {
+        white-space: pre-wrap;
+      }
+      div.help {
+        color: #444;
+        padding: 20px;
+        margin-bottom: 20px;
+        font-size: 2rem;
+        border: 1px solid #dea584;
+        border-radius: 5px;
+        background-color: #dea584;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.05);
+      }
+      div.buttons {
+        margin-top: 50px;
+      }
+      button.game--start {
+        margin-right: 15px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <nav class="navbar">
+        <div class="container">
+          <ul class="navbar-list">
+            <li class="navbar-item">
+              <a class="navbar-link" href="/">Home</a>
+            </li>
+            <li class="navbar-item">
+              <a
+                class="navbar-link"
+                href="https://github.com/metalwhale/rust-walkthroughs/tree/main/w376/tic-tac-tide"
+                target="_blank"
+              >
+                Github Repo
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+      <div class="container" id="main">
+        <section>
+          <h1 class="game--title">Tic Tac <span class="tide">Tide</span></h1>
+          <pre
+            class="explain"
+          >This is my first experience for exploring how to use <a href="https://github.com/http-rs/tide" target="_blank">Tide</a>.<span class="inspired"> (Mostly) cloned from on <a href="https://twitter.com/pepoviola" target="_blank">@pepoviola</a>'s amazing <a href="https://javierviola.com/post/exploring-websocket-with-rust-and-tide/" target="_blank">post</a>.</span></pre>
+          <div class="help">
+            <span>
+              You can <b>Start</b> a new game and share the link to play with
+              someone OR <b>Join</b> a random game.
+            </span>
+          </div>
+          <div class="buttons">
+            <button class="button-primary game--start">Start new game</button>
+            <button class="game--random">Join random game</button>
+          </div>
+        </section>
+      </div>
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        document
+          .querySelector(".game--start")
+          .addEventListener("click", handleStartGame);
+        document
+          .querySelector(".game--random")
+          .addEventListener("click", handleRandomGame);
+      });
+      async function getAndJoin(type) {
+        const url = type === "new" ? "/new" : "/random";
+        const response = await fetch(url, {
+          method: "POST",
+          cache: "no-cache",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({}),
+        });
+        if (!response.ok) {
+          throw new Error(
+            `Error ${type === "new" ? "generating" : "getting random"} board`
+          );
+        }
+        const { board_name } = await response.json();
+        if (board_name === "") {
+          alert("I don't find any board to join... please create a new one");
+        } else {
+          window.location.href = `/${board_name}`;
+        }
+      }
+      function handleStartGame() {
+        getAndJoin("new");
+      }
+      function handleRandomGame() {
+        getAndJoin("random");
+      }
+    </script>
+  </body>
+</html>

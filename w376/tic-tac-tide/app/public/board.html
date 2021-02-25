@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Tic Tac Tide - Board</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <link
+      href="//fonts.googleapis.com/css?family=Raleway:400,300,600"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link rel="stylesheet" href="/public/css/normalize.css" />
+    <link rel="stylesheet" href="/public/css/skeleton.css" />
+    <link rel="stylesheet" href="/public/css/custom.css" />
+    <style>
+      section {
+        padding-top: 20px;
+        text-align: center;
+      }
+      span.tide {
+        color: #444;
+        padding: 5px;
+        font-size: 4.7rem;
+        border: 1px solid #dea584;
+        border-radius: 5px;
+        background-color: #dea584;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.05);
+      }
+      .game--container {
+        display: grid;
+        grid-template-columns: repeat(3, auto);
+        width: 306px;
+        margin: 50px auto;
+      }
+      .cell {
+        font-family: "Permanent Marker", cursive;
+        width: 100px;
+        height: 100px;
+        box-shadow: 0 0 0 1px #333333;
+        border: 1px solid #333333;
+        cursor: pointer;
+
+        line-height: 100px;
+        font-size: 60px;
+      }
+      div.cell.x {
+        background-image: url(/public/img/x.png);
+        background-size: contain;
+      }
+      div.cell.o {
+        background-image: url(/public/img/o.png);
+        background-size: contain;
+      }
+      div.cell.x.win,
+      div.cell.o.win {
+        background: url(https://avatars2.githubusercontent.com/u/56456261?s=100&v=4);
+      }
+      div.cell.x.win::after,
+      div.cell.o.win::after {
+        content: "";
+      }
+      button.hidden {
+        display: none;
+      }
+      h2.complete {
+        font-size: 2rem;
+        color: red;
+      }
+      span.player {
+        background-size: contain;
+        width: 50px;
+        display: inline-block;
+        height: 50px;
+        vertical-align: middle;
+      }
+      span.player.X {
+        background-image: url(/public/img/ic_X.svg);
+      }
+      span.player.O {
+        background-image: url(/public/img/ic_O.svg);
+      }
+      .hide {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <nav class="navbar">
+        <div class="container">
+          <ul class="navbar-list">
+            <li class="navbar-item">
+              <a class="navbar-link" href="/">Home</a>
+            </li>
+            <li class="navbar-item">
+              <a
+                class="navbar-link"
+                href="https://github.com/metalwhale/rust-walkthroughs/tree/main/w376/tic-tac-tide"
+                target="_blank"
+              >
+                Github Repo
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+      <div class="container" id="main">
+        <section>
+          <h1 class="game--title">Tic Tac <span class="tide">Tide</span></h1>
+          <pre
+            class="explain"
+          >Images were taken from <a href="https://github.com/rmdias/ng2-tic-tac-toe" target="_blank">here</a>.</pre>
+          <div class="game--container">
+            <div data-cell-index="0" class="cell"></div>
+            <div data-cell-index="1" class="cell"></div>
+            <div data-cell-index="2" class="cell"></div>
+            <div data-cell-index="3" class="cell"></div>
+            <div data-cell-index="4" class="cell"></div>
+            <div data-cell-index="5" class="cell"></div>
+            <div data-cell-index="6" class="cell"></div>
+            <div data-cell-index="7" class="cell"></div>
+            <div data-cell-index="8" class="cell"></div>
+          </div>
+          <h2 class="game--status"></h2>
+          <pre class="game--intro hide">
+            Now share the <a href="#">link</a> to a friend to start playing
+          </pre>
+          <button class="game--restart">Restart Game</button>
+        </section>
+      </div>
+    </div>
+    <script src="/public/js/game.js"></script>
+  </body>
+</html>
