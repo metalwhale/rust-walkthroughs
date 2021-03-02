@@ -1672,6 +1672,8 @@ dependencies = [
  "env_logger",
  "futures-util",
  "petname",
+ "serde",
+ "serde_derive",
  "serde_json",
  "tide",
  "tide-websockets",

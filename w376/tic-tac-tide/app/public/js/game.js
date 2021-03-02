@@ -37,18 +37,18 @@ document.addEventListener("DOMContentLoaded", function () {
   io.addEventListener("message", (message) => {
     console.log("Message from server", message.data);
     const data = JSON.parse(message.data);
-    switch (data.cmd) {
+    switch (data.command) {
       case "STATE":
-        gameState = data.play_book;
+        gameState = data.board;
         // redraw
         redrawPlayBook();
         if (!handleResultValidation()) handlePlayerChange();
         break;
-      case "INIT":
-        console.log("init");
-        client_id = data.client_id;
-        localPlayer = data.player == "X" ? "X" : "O";
-        gameState = data.play_book;
+      case "ADD":
+        console.log("add");
+        client_id = data.player_id;
+        localPlayer = data.label == "X" ? "X" : "O";
+        gameState = data.board;
         if (localPlayer === "X")
           document.querySelector(".game--intro").classList.remove("hide");
         // redraw
@@ -59,16 +59,16 @@ document.addEventListener("DOMContentLoaded", function () {
       case "RESET":
         console.log("reset");
         if (!reset_by_me) alert("Other player just RESET the game");
-        gameState = data.play_book;
+        gameState = data.board;
         // redraw
         redrawPlayBook();
         handlePlayerChange();
         gameActive = localPlayer === currentPlayer ? true : false;
         reset_by_me = false;
         break;
-      case "COMPLETE":
-        console.log("COMPLETE");
-        alert("Oops... board complete!");
+      case "FULL":
+        console.log("full");
+        alert("Oops... board full!");
         statusDisplay.innerHTML = COMPLETE_MSG;
         statusDisplay.classList.add("complete");
         document.querySelector(".game--restart").classList.add("hidden");
